@@ -16,7 +16,6 @@ A sample workflow:
 ```.
 +-- gulpfile.js
 +-- build
-|       +-- swagger.json
 +-- src
 |       +-- headers.cors.json
 |       +-- index.json
@@ -47,9 +46,19 @@ gulp.task('swagger', function() {
 ### Example Output
 
 ```
-
+$ gulp swagger
+[09:15:33] Using gulpfile /path/to/gulpfile.js
+[09:15:33] Starting 'swagger'...
+[09:15:33] Finished 'swagger' after 49 ms
 ```
 
+Which produces an artifact for import:
+
+```.
++-- gulpfile.js
++-- build
+|       +-- swagger.json
+```
 
 ## Note About AWS-Flavored Swagger
 
