@@ -2,7 +2,7 @@
 
 This plugin can be used as a build step to enable the use of local file paths in the $ref property of Swagger.io JSON files.  The resulting single JSON file can be uploaded with the AWS API Gateway import tool as part of a CI environment that makes use of standard development practices (such as keeping source files in source control).
 
-AWS API Gateway import tool: https://github.com/awslabs/aws-apigateway-importer.
+AWS API Gateway import tool: https://github.com/awslabs/aws-apigateway-importer .
 
 ## Installation
 
@@ -49,6 +49,13 @@ gulp.task('swagger', function() {
 ```
 
 ```
+
+
+## Note About AWS-Flavored Swagger
+
+The AWS API Gateway Importer requires custom Swagger sections to perform the task of integration with the API Gateway.  See the tests folder for an example of what that looks like.
+
+Also: https://github.com/awslabs/aws-apigateway-importer .
 
 ## LICENSE
 

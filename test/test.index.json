@@ -1,0 +1,57 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Test API",
+    "description" : "API Services for My Company",
+    "version" : "1.0.0"
+  },
+  "host" : "my.company.com",
+  "schemes":[
+    "https"
+  ],
+  "basePath" : "/",
+  "produces":[
+    "application/json"
+  ],
+  "securityDefinitions" : {
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "x-api-key",
+      "in" : "header"
+    }
+  },
+  "paths" : {
+    "/item/{id}" : {
+      "$ref" : [ "test.get.items.json", "test.headers.cors.json" ]
+    }
+  },
+  "parameters" : {
+    "postDate" : {
+      "name" : "id",
+      "in" : "path",
+      "description" : "Unique item identifier",
+      "required":true,
+      "type" : "integer",
+      "format" : "int64"
+    }
+  },
+  "definitions" : {
+    "Item" : {
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "format" : "string"
+        }
+      }
+    },
+    "Error" : {
+      "properties" : {
+        "errorMessage" : {
+          "type" : "string",
+          "format" : "JSON"
+        }
+      }
+    }
+  }
+}
+

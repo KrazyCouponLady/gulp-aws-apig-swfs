@@ -1,0 +1,75 @@
+{
+  "get":{
+    "summary":"Item by ID",
+    "description":"Returns an Item by it's ID",
+    "parameters":[
+      {
+        "$ref":"#/parameters/id"
+      }
+    ],
+    "tags":[
+      "Items"
+    ],
+    "responses":{
+      "200":{
+        "description":"An Item",
+        "schema":{
+          "$ref":"#/definitions/Item"
+        },
+        "headers":{
+          "$ref":"test.headers.cors.json"
+        }
+      },
+      "400":{
+        "description":"Unexpected error",
+        "schema":{
+          "$ref":"#/definitions/Error"
+        },
+        "headers":{
+          "$ref":"test.headers.cors.json"
+        }
+      }
+    },
+    "security":[
+      {
+        "api_key":[]
+      }
+    ],
+    "x-amazon-apigateway-auth":{
+      "type":"none"
+    },
+    "x-amazon-apigateway-integration":{
+      "type":"aws",
+      "uri":"arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:<account-id>:function:Items:PROD/invocations",
+      "httpMethod":"POST",
+      "credentials":"arn:aws:iam::<account-id>:role/lambda_basic_execution",
+      "requestTemplates":{
+        "application/json":"{\"postId\":\"$input.params('id')\"}"
+      },
+      "cacheNamespace":"cache-namespace",
+      "cacheKeyParameters":[
+        "method.request.path.id"
+      ],
+      "responses":{
+        "default":{
+          "statusCode":"200",
+          "responseParameters":{
+            "$ref":"test.x-amz-headers.cors.json"
+          },
+          "responseTemplates":{
+            "application/json":null
+          }
+        },
+				".*errorMessage.*" : {
+          "statusCode":"400",
+          "responseParameters":{
+            "$ref":"test.x-amz-headers.cors.json"
+          },
+          "responseTemplates":{
+            "application/json":null
+          }
+				}
+      }
+    }
+  }
+}

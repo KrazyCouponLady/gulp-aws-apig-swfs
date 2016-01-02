@@ -2,7 +2,7 @@ var through = require('through2'),
 	gutil = require('gulp-util'),
 	File = gutil.File;
 
-function updateChildren(node, cache) {
+function updateChildren(node, cache, errorHandler) {
 	for (var key in node) {
 		if (node[key] && typeof node[key] == 'object') {
 			if (typeof node[key].push == 'undefined') {
@@ -33,7 +33,7 @@ function updateChildren(node, cache) {
 			for (var childKey in cachedValue) {
 				node[childKey] = cachedValue[childKey];	
 				foundFileRef = true;
-				updateChildren(node[childKey], cache);
+				updateChildren(node[childKey], cache, errorHandler);
 			}
 		}
 
@@ -57,10 +57,17 @@ module.exports = function(rootFileName) {
 	}
 
 	function finalize(cb) {
-		updateChildren(cache[rootFileName], cache);
+		try {
+			updateChildren(cache[rootFileName], cache);
+		}
+		catch (error) {
+			this.emit('error', error);
+			throw new PluginError('gulp-aws-apig-swfs', error, {showStack:true});
+		}
 		var outputFile = new File(rootFile);
 		outputFile.contents = new Buffer(JSON.stringify(cache[rootFileName], null, '  '));
 		this.push(outputFile);
+		this.emit('end', outputFile);
 		cb();
 	}
 	
